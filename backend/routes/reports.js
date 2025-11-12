@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { authorizeRoles } = require('../middleware/auth'); // ✅ Add this line
 
 // Sample in-memory report data (replace with DB in real project)
 const reports = [
@@ -9,8 +10,9 @@ const reports = [
   { id: 4, title: 'Ops Report November', status: 'open', category: 'ops', date: '2025-11-10' },
 ];
 
-// GET /reports?from=YYYY-MM-DD&to=YYYY-MM-DD&status=open&category=finance
-router.get('/', (req, res) => {
+// ✅ Apply RBAC protection
+// Only 'admin' and 'report_viewer' roles can access /reports
+router.get('/', authorizeRoles('admin', 'report_viewer'), (req, res) => {
   let filteredReports = [...reports];
 
   const { from, to, status, category } = req.query;
