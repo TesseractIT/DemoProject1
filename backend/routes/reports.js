@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { authorizeRoles } = require('../middleware/auth'); // optional - keep if you use RBAC
+
 const reportController = require('../controllers/reportController');
 
 router.get('/', reportController.getReports);
