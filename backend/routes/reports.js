@@ -2,6 +2,12 @@ const express = require('express');
 const router = express.Router();
 const { authorizeRoles } = require('../middleware/auth'); // optional - keep if you use RBAC
 
+const reportController = require('../controllers/reportController');
+
+router.get('/', reportController.getReports);
+router.get('/:id', reportController.getReportById);
+
+module.exports = router;
 // --- Example in-memory dataset (replace with DB in production) ---
 const reports = [];
 for (let i = 1; i <= 50000; i++) { // simulate many rows for large export
